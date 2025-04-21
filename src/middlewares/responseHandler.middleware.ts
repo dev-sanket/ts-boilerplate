@@ -48,7 +48,7 @@ export const finalResponseHandler = (
 
   res.status(status || 200).json({
     message,
-    ...(data
+    ...(data || (status >= 200 && status < 300)
       ? { data, status }
       : {
           status: status || 500,

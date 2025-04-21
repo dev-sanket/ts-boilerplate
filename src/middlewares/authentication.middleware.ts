@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { clerkClient } from '@clerk/clerk-sdk-node';
 import { verifyToken } from '@clerk/backend';
-import { errorTypes } from '../utils';
+import { errorTypes, logger } from '../utils';
 
 const { UnauthorizedError } = errorTypes;
 // Middleware to verify the token
@@ -36,7 +36,7 @@ export const verifyClerkJWTToken = async (
     req.user = await clerkClient.users.getUser(decodedJwt.sub);
     next();
   } catch (error) {
-    console.error('Token verification error:', error);
+    logger.error('Token verification error:', error);
     next(new UnauthorizedError('Unauthorized: Invalid token'));
   }
 };
