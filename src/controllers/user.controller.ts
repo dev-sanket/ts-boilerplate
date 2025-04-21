@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { UserService } from '../services';
 import { ApiResponse, IUser } from '../types';
 
