@@ -1,6 +1,7 @@
 import { UserService } from '../services';
-import { ApiResponse, IUser } from '../types';
-
+import { ApiResponse } from '../types';
+import { IUser } from '../entities';
+import { Request, Response } from 'express';
 export class UserController {
   private userService: UserService;
 
@@ -13,8 +14,9 @@ export class UserController {
     return { data: users, message: 'Success', status: 200 };
   }
 
-  async getUserById(id: string): Promise<ApiResponse<IUser>> {
-    const user = await this.userService.getUserByClerkId(id);
+  async getUserById(req: Request): Promise<ApiResponse<IUser>> {
+    const id = req.params.id;
+    const user = await this.userService.getUserById(id);
     return { data: user, message: 'Success', status: 200 };
   }
 }

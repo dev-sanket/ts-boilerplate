@@ -1,7 +1,6 @@
-import { IUser } from '../types';
+import { IUser } from '../entities';
 import { UserRepository } from '../repositories/user.repository';
 import { errorTypes } from '../utils/index';
-import { MoreThanOrEqual } from 'typeorm';
 
 const { ResourceNotFoundError } = errorTypes;
 export class UserService {
@@ -12,27 +11,14 @@ export class UserService {
   }
 
   async getAllUsers(): Promise<IUser[]> {
-    return await this.userRepository.getAll();
+    return await this.userRepository.findAll({ order: { createdAt: 'DESC' } });
   }
 
-  async getUserByClerkId(userId: string): Promise<IUser> {
-    const user = await this.userRepository.getByClerkId(userId);
+  async getUserById(id: string): Promise<IUser> {
+    const user = await this.userRepository.findById(id);
     if (!user) {
-      throw new ResourceNotFoundError('User', userId);
+      throw new ResourceNotFoundError('User', id);
     }
     return user;
-  }
-
-  async hasUserTrainedModel(userId: number): Promise<boolean> {
-    const trainingCount = await this.userRepository.count({
-      id: userId,
-      trainedModelCount: MoreThanOrEqual(0),
-    });
-
-    return trainingCount > 0;
-  }
-
-  async createOrUpdate(user: IUser): Promise<IUser> {
-    return await this.userRepository.createOrUpdate(user);
   }
 }

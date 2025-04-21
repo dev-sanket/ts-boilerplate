@@ -1,12 +1,16 @@
 import { Entity, Column } from 'typeorm';
 import { BaseModel } from './base.entity';
-import { IUser } from '../types';
+
+export interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  profilePicture?: string;
+  trainedModelCount: number;
+}
 
 @Entity({ name: 'users' })
 export class User extends BaseModel implements IUser {
-  @Column({ unique: true, nullable: false })
-  clerkId: string = '';
-
   @Column()
   name: string = '';
 
