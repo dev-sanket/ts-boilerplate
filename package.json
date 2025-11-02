@@ -59,7 +59,7 @@
     "razorpay": "^2.9.6",
     "reflect-metadata": "^0.2.2",
     "svix": "^1.62.0",
-    "typeorm": "^0.3.20",
+    "typeorm": "^0.3.26",
     "uuid": "^11.1.0",
     "winston": "^3.17.0"
   }
